@@ -2,6 +2,51 @@ import React from "react";
 import ReactDOM from "react-dom/client"
 import "./index.css"
 
+const pizzaData = [
+  {
+    name: "Focaccia",
+    ingredients: "Bread with italian olive oil and rosemary",
+    price: 6,
+    photoName: "pizzas/focaccia.jpg",
+    soldOut: false,
+  },
+  {
+    name: "Pizza Margherita",
+    ingredients: "Tomato and mozarella",
+    price: 10,
+    photoName: "pizzas/margherita.jpg",
+    soldOut: false,
+  },
+  {
+    name: "Pizza Spinaci",
+    ingredients: "Tomato, mozarella, spinach, and ricotta cheese",
+    price: 12,
+    photoName: "pizzas/spinaci.jpg",
+    soldOut: false,
+  },
+  {
+    name: "Pizza Funghi",
+    ingredients: "Tomato, mozarella, mushrooms, and onion",
+    price: 12,
+    photoName: "pizzas/funghi.jpg",
+    soldOut: false,
+  },
+  {
+    name: "Pizza Salamino",
+    ingredients: "Tomato, mozarella, and pepperoni",
+    price: 15,
+    photoName: "pizzas/salamino.jpg",
+    soldOut: true,
+  },
+  {
+    name: "Pizza Prosciutto",
+    ingredients: "Tomato, mozarella, ham, aragula, and burrata cheese",
+    price: 18,
+    photoName: "pizzas/prosciutto.jpg",
+    soldOut: false,
+  },
+];
+
  
 
 
@@ -30,9 +75,20 @@ function Header(){
 
 function Menu(){
     return (
-        <div className="menu">
+        <main className="menu">
           <h2>Our Menu</h2>
-            <Pizza 
+          
+          {/* Rendering the Pizza as list */}
+          <ul className="pizzas">
+  
+            {
+              pizzaData.map((pizza)=>(
+                <Pizza pizzaObj = {pizza} key = {pizza.name}/>
+              ))
+            }
+
+          </ul>
+            {/* <Pizza 
                 name= "Pizza Spinaci"
                 ingredients= "Tomato, mozarella, spinach, and ricotta cheese"
                 price= {10}
@@ -67,9 +123,11 @@ function Menu(){
               photoName= "pizzas/salamino.jpg"
               soldOut= "true"
             />
+             */}
             
-            
-        </div>
+            <button className="btn"> Order Now</button>
+        </main>
+       
     );
 
 }
@@ -85,7 +143,7 @@ function Footer(){
   const isOpen = hour>=openHour && hour<= closedHour;
   if(isOpen){
     return (<div className = "footer">
-      <h3>{new Date().toLocaleDateString()} {new Date().toLocaleTimeString()} WE ARE OPEN</h3>
+     <h3>We are Open untill {closedHour}</h3>
     </div>);
   }else{
     return <h2 className = "footer"> Sorry! we are closed</h2>
@@ -146,15 +204,21 @@ function Footer(){
 
 function Pizza(props){
   return (
-    <div className="pizza">
-      <img src={props.photoName} alt={props.photoInfo} />
-      <h3>{props.name}</h3>
-      <h3 >Price : $ {props.price}</h3>
-      <p>{props.ingredients}</p>
-    </div>
+    
+     <li className={`pizza ${props.pizzaObj.soldOut ? 'sold-out' : ''}`}>
+      <img 
+        src={props.pizzaObj.photoName} 
+        alt={props.pizzaObj.photoInfo} 
+      />
+      <div>
+        <h3>{props.pizzaObj.name}</h3>
+        <p>{props.pizzaObj.ingredients}</p>
+        <span >Price : $ {props.pizzaObj.price}</span>
+      </div>
+    </li>
   );
 }
-export default Pizza;
+ 
 
 
 
