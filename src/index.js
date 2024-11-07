@@ -77,7 +77,11 @@ function Menu(){
     return (
         <main className="menu">
           <h2>Our Menu</h2>
-          
+          <p> 
+            Experience the rich, authentic flavors of Italy with our selection of six handcrafted pizzas.
+            Each pizza is made from scratch using traditional Italian recipes, premium ingredients, and carefully sourced toppings. 
+            Indulge in the true essence of Italian pizza artistry with every slice. 
+          </p>
           {/* Rendering the Pizza as list */}
           <ul className="pizzas">
   
@@ -133,23 +137,25 @@ function Menu(){
 }
 
 
-
-function Footer(){
-  // this is very static. We need to change it to dynamic
-  //  return  (<footer>{new Date().toLocaleDateString()}   We are Open</footer>);
+function getFooterMessage() {
   const hour = new Date().getHours();
   const openHour = 12;
-  const closedHour =22;
-  const isOpen = hour>=openHour && hour<= closedHour;
-  if(isOpen){
-    return (<div className = "footer">
-     <h3>We are Open untill {closedHour}</h3>
-    </div>);
-  }else{
-    return <h2 className = "footer"> Sorry! we are closed</h2>
-  }
+  const closedHour = 22;
+  const isOpen = hour >= openHour && hour <= closedHour;
 
+  return isOpen
+    ? `We are open until ${closedHour}`
+    : "Sorry! We are closed";
 }
+
+function Footer() {
+  return (
+    <div className="footer">
+      <h2>{getFooterMessage()}</h2>
+    </div>
+  );
+}
+
 //again this is a statically typed method of doing this. This can be done programattically by passign the 
 //properties as argumentst
 // function Pizza() {
@@ -201,10 +207,10 @@ function Footer(){
 //   );
 // }
 
-
+// Reusable Pizza component
 function Pizza(props){
+ 
   return (
-    
      <li className={`pizza ${props.pizzaObj.soldOut ? 'sold-out' : ''}`}>
       <img 
         src={props.pizzaObj.photoName} 
@@ -215,11 +221,9 @@ function Pizza(props){
         <p>{props.pizzaObj.ingredients}</p>
         <span >Price : $ {props.pizzaObj.price}</span>
       </div>
-    </li>
-  );
+    </li>);
 }
  
-
 
 
 const Root = ReactDOM.createRoot(document.getElementById("root"));
